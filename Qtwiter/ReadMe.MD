@@ -6,6 +6,7 @@
   - Inserção de usuario
   - Remoção de usuario
   - Listagem de todos os usuarios
+  - Pesquisa de usuarios por nome
 - **Funções não implementadas**:
   - Alteração de usuario
   - Inserção de postagem
