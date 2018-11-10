@@ -37,10 +37,14 @@ public class Adm_user_teste {
 				break;
 				
 			case "showAllusers":
-				 listaUsuarios = userdao.getListUser();
+				listaUsuarios = userdao.getListUser();
 				System.out.println(listaUsuarios);
 				break;
-			case "showNameusers":
+			case "User_na":
+				System.out.println("Digite o nome do usuario:");
+				String nome = input.nextLine();
+				listaUsuarios = userdao.getListUserNome(nome);	
+				System.out.println(listaUsuarios);
 				break;
 				
 				

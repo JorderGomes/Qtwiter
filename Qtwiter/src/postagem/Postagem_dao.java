@@ -12,7 +12,8 @@ public class Postagem_dao {
 	// crud
 	public Postagem_dao() { }
 	
-	public boolean addPostagem(){
+	public boolean addPostagem(Postagem postagem){
+		
 		return false;
 	}
 	

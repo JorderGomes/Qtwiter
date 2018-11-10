@@ -40,7 +40,7 @@ public class Usuario {
 	}
 	@Override
 	public String toString() {
-		return "Usuario [ nome=" + nome + ", email=" + email + "]";
+		return " \nUsuario [ nome=" + nome + ", email=" + email + "] \n";
 	}
 	
 
