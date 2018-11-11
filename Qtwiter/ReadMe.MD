@@ -1,7 +1,7 @@
 # Qtwiter
 
 
-## Versão 1
+## Versão 2
 - **Funções implementadas**:
   - Inserção de usuario
   - Remoção de usuario
