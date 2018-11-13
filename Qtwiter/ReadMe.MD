@@ -1,13 +1,14 @@
 # Qtwiter
 
 
-## Versão 1
+## Versão 2
 - **Funções implementadas**:
   - Inserção de usuario
   - Remoção de usuario
   - Listagem de todos os usuarios
   - Pesquisa de usuarios por nome
   - Inserção de postagem
+
 - **Funções não implementadas**:
   - Alteração de usuario
   - Remoção de postagem
