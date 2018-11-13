@@ -123,7 +123,6 @@ public class Usuario_dao {
 		}
 		return listaUsuarios;
 	}
-
 	public ArrayList<Usuario> getListUserNome(String name) {
 		String sql = "SELECT * FROM usuario where nome = ?;";
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
@@ -131,6 +130,36 @@ public class Usuario_dao {
 
 		try {
 
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, name);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				String nome = rs.getString("nome");
+				String email = rs.getString("email");
+				String senha = rs.getString("senha");
+
+				Usuario user = new Usuario(nome, email, senha);
+
+				listaUsuarios.add(user);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return listaUsuarios;
+	}
+	
+	public ArrayList<Usuario> getListUserEmail(String name) {
+		String sql = "SELECT * FROM usuario where email = ?;";
+		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		this.connection = new Connection_factory().getConnection();
+		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();

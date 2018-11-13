@@ -6,9 +6,10 @@
   - Inserção de usuario
   - Remoção de usuario
   - Listagem de todos os usuarios
+  - Pesquisa de usuarios por nome
+  - Inserção de postagem
 - **Funções não implementadas**:
   - Alteração de usuario
-  - Inserção de postagem
   - Remoção de postagem
   - Alteração de postagem
   - Feed

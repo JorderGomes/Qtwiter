@@ -20,7 +20,6 @@ public class Qtwiter {
 			Scanner input = new Scanner(System.in);
 			String comando = input.nextLine();
 			String[] comandos = comando.split(" ");
-			
 			switch (comandos[0]) {
 			case "logar":
 				Usuario_dao userdao= new Usuario_dao();
