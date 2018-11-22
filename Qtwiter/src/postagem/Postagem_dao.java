@@ -3,11 +3,14 @@ package postagem;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 //import java.sql.ResultSet;
 import java.sql.SQLException;
 //import java.util.ArrayList;
+import java.util.ArrayList;
 
 import jdbc.Connection_factory;
+import usuario.Usuario;
 
 public class Postagem_dao {
 	private Connection connection;
@@ -59,8 +62,34 @@ public class Postagem_dao {
 	}
 
 	// specifc
-	public boolean list_my_Posts() {
-		return false;
+	public ArrayList<Postagem> list_my_Posts(String email) {
+		String sql = "SELECT * FROM postagem where email_usuario = ?;";
+		ArrayList<Postagem> minhas_postagens = new ArrayList<Postagem>();
+		this.connection = new Connection_factory().getConnection();
+		
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, email);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Date data = rs.getDate("Data");
+				java.sql.Time hora = rs.getTime("Hora");
+				String texto = rs.getString("texto");
+				Postagem post = new Postagem(data, hora, texto, email);
+				minhas_postagens.add(post);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return minhas_postagens;
 	}
 
 	public boolean list_Postagem_seguido() {

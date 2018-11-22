@@ -46,10 +46,8 @@ public class Usuario_dao {
 		this.connection = new Connection_factory().getConnection();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-
 			// seta os valores
 			stmt.setString(1, email);
-
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();
 			if (qtdRowsAffected > 0)
@@ -123,13 +121,12 @@ public class Usuario_dao {
 		}
 		return listaUsuarios;
 	}
+
 	public ArrayList<Usuario> getListUserNome(String name) {
 		String sql = "SELECT * FROM usuario where nome = ?;";
 		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
 		this.connection = new Connection_factory().getConnection();
-
 		try {
-
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, name);
 			ResultSet rs = stmt.executeQuery();
@@ -154,23 +151,76 @@ public class Usuario_dao {
 		}
 		return listaUsuarios;
 	}
-	
-	public ArrayList<Usuario> getListUserEmail(String name) {
+
+	public Usuario getListUserEmail(String emailp) {
 		String sql = "SELECT * FROM usuario where email = ?;";
-		ArrayList<Usuario> listaUsuarios = new ArrayList<Usuario>();
+		Usuario user = null;
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, emailp);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			String nome = rs.getString("nome");
+			String email = rs.getString("email");
+			String senha = rs.getString("senha");
+			user = new Usuario(nome, email, senha);
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return user;
+	}
+
+	public Usuario getNamePass(String name, String pass) {
+		String sql = "SELECT * FROM usuario where nome = ? and senha = ?;";
+		Usuario user = null;
 		this.connection = new Connection_factory().getConnection();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, name);
+			stmt.setString(2, pass);
+			ResultSet rs = stmt.executeQuery();
+			rs.next();
+			String nome = rs.getString("nome");
+			String email = rs.getString("email");
+			String senha = rs.getString("senha");
+			user = new Usuario(nome, email, senha);
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return user;
+	}
+
+	public ArrayList<Usuario> seguidores(String email_seguido) {
+		String sql = "SELECT * FROM usuario U where U.email in "
+				+ "(select email_segue from folow where email_seguido = ?);";
+		ArrayList<Usuario> seguidores = new ArrayList<Usuario>();
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, email_seguido);
+			
 			ResultSet rs = stmt.executeQuery();
 			while (rs.next()) {
-				String nome = rs.getString("nome");
-				String email = rs.getString("email");
-				String senha = rs.getString("senha");
-
-				Usuario user = new Usuario(nome, email, senha);
-
-				listaUsuarios.add(user);
+			String nome = rs.getString("nome");
+			String email = rs.getString("email");
+			String senha = rs.getString("senha");
+			Usuario user = new Usuario(nome, email, senha);
+			seguidores.add(user);
 			}
 			stmt.close();
 		} catch (SQLException e) {
@@ -182,8 +232,37 @@ public class Usuario_dao {
 				e.printStackTrace();
 			}
 		}
-		return listaUsuarios;
+		return seguidores;
 	}
-
-
+	
+	public ArrayList<Usuario> seguidos(String email_seguidor) {
+		String sql = "SELECT * FROM usuario U where U.email in "
+				+ "(select email_seguido from folow where email_segue = ?);";
+		ArrayList<Usuario> seguidos = new ArrayList<Usuario>();
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, email_seguidor);
+			
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+			String nome = rs.getString("nome");
+			String email = rs.getString("email");
+			String senha = rs.getString("senha");
+			Usuario user = new Usuario(nome, email, senha);
+			seguidos.add(user);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return seguidos;
+	}
+	
 }

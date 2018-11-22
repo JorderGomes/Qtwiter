@@ -8,16 +8,16 @@
   - Listagem de todos os usuarios
   - Pesquisa de usuarios por nome
   - Inserção de postagem
+  - Listar minhas postagens publicadas
+  - Listar seguidores
+  - Listar seguidos
+  - Folow
+  - Feed
+  - Listar postagens de um usuario
 
 - **Funções não implementadas**:
   - Alteração de usuario
   - Remoção de postagem
-  - Alteração de postagem
-  - Feed
-  - Listar seguidores
-  - Listar seguidos
-  - Listar postagens publicadas
-  - Listar postagens de um usuario
-  - Folow
+  - Alteração de postagem  
   - Unfolow
 

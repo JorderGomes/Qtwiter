@@ -2,6 +2,7 @@ package postagem;
 
 
 
+import java.sql.Time;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -16,35 +17,38 @@ public class Postagem {
 	private String texto;
 	private String email_usuario;
 	
+	
+	
 	@Override
 	public String toString() {
-		return "Postagem [data= " + data + ", texto= " + texto + ", email_usuario= " + email_usuario + "]";
+		return "\n [data= " + data + ", hora= " + hora + ", texto= " 
+	            + texto + ", email_usuario= " + email_usuario + "] \n";
 	}
-	
+
 	public Postagem(String texto, String email_usuario) throws ParseException {
-		
-		
 		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 		DateFormat hourFormat = new SimpleDateFormat("HH:mm:ss");
-		
 		Date data = new Date();
 		Date hora = new Date();
-		
 		String dat = dateFormat.format(data);	
 		String hou = hourFormat.format(data);
-		
 		data = (Date) dateFormat.parse(dat);
 		hora = (Date) hourFormat.parse(hou);
-		
 		java.sql.Date datasql = new java.sql.Date(data.getTime());
 		java.sql.Time horasql = new java.sql.Time(hora.getTime());
-		
 		this.hora = horasql;
 		this.data = datasql;
 		this.texto = texto;
 		this.email_usuario = email_usuario;
 	}
-		
+	
+	public Postagem (Date data, Date hora, String texto, String email) {
+		this.data = data;
+		this.hora = (Time) hora;
+		this.texto = texto;
+		this.email_usuario = email;
+	}
+	
 	public java.sql.Time getHora() {
 		return hora;
 	}

@@ -9,7 +9,7 @@ import usuario.Usuario_dao;
 public class Adm_user_teste {
 	public static void main(String[] args) {
 		boolean run = true;
-		String nome, email;
+		String nome, email, senha;
 		Usuario_dao userdao = new Usuario_dao();
 		Usuario user;
 		boolean res = false;
@@ -50,12 +50,19 @@ public class Adm_user_teste {
 				break;
 				
 			case "User_e":
-				System.out.println("Digite o nome do usuario:");
+				System.out.println("Digite o email do usuario:");
 				email = input.nextLine();
-				listaUsuarios = userdao.getListUserNome(email);
-				System.out.println(listaUsuarios);
+				user = userdao.getListUserEmail(email);
+				System.out.println(user);
 				break;
-				
+			case "User_np":
+				System.out.println("Digite o nome do usuario:");
+				nome = input.nextLine();
+				System.out.println("Digite a senha do usuario:");
+				senha = input.nextLine();
+				user = userdao.getNamePass(nome, senha);
+				System.out.println(user);
+				break;
 
 			case "sair":
 				System.out.println("Programa encerrado!");
