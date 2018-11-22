@@ -31,6 +31,9 @@ public class Logado {
 			System.out.println("| 4 | Ver quem voce segue");
 			System.out.println("| 5 | Seguir Alguém");
 			System.out.println("| 6 | Deixar de seguir alguém");
+			System.out.println("| 7 | Mudar seu nome"); // <-------------------------------------------
+			System.out.println("| 8 | Mudar sua senha");
+			System.out.println("| 9 | Mudar seu email");
 			System.out.println("| 0 | Deslogar");
 
 			input = new Scanner(System.in);
@@ -79,7 +82,29 @@ public class Logado {
 				if(result_querys) System.out.println("Você deixou de seguir " + texto);
 				else System.out.println("Erro");
 				break;
-
+				
+			case "7":
+				System.out.println("Qual é o seu novo nome?");
+				texto = input.nextLine();
+				result_querys = us_dao.alterUser(user, texto) ;
+				if(result_querys) System.out.println("Nome alterado!");
+				else System.out.println("Erro ao alterar");
+				break;
+				
+			case "8":
+				System.out.println("Qual é a sua nova senha?");
+				texto = input.nextLine();
+				result_querys = us_dao.alterSenhaUser(user, texto) ;
+				if(result_querys) System.out.println("Senha alterada!");
+				else System.out.println("Erro ao alterar");
+				break;
+			case "9":
+				System.out.println("Qual é o seu novo email?");
+				texto = input.nextLine();
+				result_querys = us_dao.alterEUser(user, texto) ;
+				if(result_querys) System.out.println("Email alterado!");
+				else System.out.println("Erro ao alterar");
+				break;
 			default:
 				System.out.println("comando inválido");
 				break;
@@ -87,3 +112,17 @@ public class Logado {
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

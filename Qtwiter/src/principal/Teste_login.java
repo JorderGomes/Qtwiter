@@ -21,7 +21,6 @@ public class Teste_login {
 			
 			Scanner input = new Scanner(System.in);
 			String comando = input.nextLine();
-			//String[] comandos = comando.split(" ");
 			switch (comando) {
 			case "0":
 				System.out.println("Programa encerrado!");

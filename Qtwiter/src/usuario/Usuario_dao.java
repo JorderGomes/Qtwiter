@@ -265,4 +265,61 @@ public class Usuario_dao {
 		return seguidos;
 	}
 	
+
+
+public boolean alterSenhaUser(Usuario usuario, String novaSenha) {
+	String sql = "UPDATE usuario SET senha = ? where email = ?";
+	this.connection = new Connection_factory().getConnection();
+	try {
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		stmt.setString(1, novaSenha);
+		stmt.setString(2, usuario.getEmail());
+
+		int qtdRowsAffected = stmt.executeUpdate();
+		stmt.close();
+		if (qtdRowsAffected > 0)
+			return true;
+		return false;
+	} catch (SQLException e) {
+		System.err.println(e.getMessage());
+	} finally {
+		try {
+			this.connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	return false;
+}
+
+public boolean alterEUser(Usuario usuario, String email) {
+	String sql = "UPDATE usuario SET email = ? where email = ?";
+	this.connection = new Connection_factory().getConnection();
+	try {
+		PreparedStatement stmt = connection.prepareStatement(sql);
+
+		stmt.setString(1, email);
+		stmt.setString(2, usuario.getEmail());
+
+		int qtdRowsAffected = stmt.executeUpdate();
+		stmt.close();
+		if (qtdRowsAffected > 0)
+			return true;
+		return false;
+	} catch (SQLException e) {
+		System.err.println(e.getMessage());
+	} finally {
+		try {
+			this.connection.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	return false;
+}
+
+
+
+
 }
