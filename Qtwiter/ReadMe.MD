@@ -12,6 +12,7 @@
   - Listar seguidores
   - Listar seguidos
   - Folow
+  - Unfolow
   - Feed
   - Listar postagens de um usuario
 
@@ -19,5 +20,5 @@
   - Alteração de usuario
   - Remoção de postagem
   - Alteração de postagem  
-  - Unfolow
+  
 
