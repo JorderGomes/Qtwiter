@@ -5,21 +5,23 @@
 - **Funções implementadas**:
   - Inserção de usuario
   - Remoção de usuario
-  - Listagem de todos os usuarios
   - Pesquisa de usuarios por nome
   - Alteração de usuario
+  
+  - Listagem de todos os usuarios
+  
   - Inserção de postagem
+  - Remoção de postagem
+  - Alteração de postagem  
   - Listar minhas postagens publicadas
+  
   - Listar seguidores
   - Listar seguidos
   - Folow
   - Unfolow
-  - Feed
+  
   - Listar postagens de um usuario
-
+  - Feed
+  
 - **Funções não implementadas**:
   
-  - Remoção de postagem
-  - Alteração de postagem  
-  
-

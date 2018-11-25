@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import jdbc.Connection_factory;
-import usuario.Usuario;
 
 public class Postagem_dao {
 	private Connection connection;
@@ -27,7 +26,7 @@ public class Postagem_dao {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 
 			stmt.setDate(1, (Date) post.getData());
-			stmt.setTime(2,  post.getHora());
+			stmt.setTime(2, post.getHora());
 			stmt.setString(3, post.getTexto());
 			stmt.setString(4, post.getEmail_usuario());
 
@@ -49,7 +48,28 @@ public class Postagem_dao {
 
 	}
 
-	public boolean deletarPostagem() {
+	public boolean deletarPostagem(String texto, String email) {
+		String sql = "DELETE FROM postagem WHERE texto = ? and email_usuario = ?";
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, texto);
+			stmt.setString(2, email);
+			int qtdRowsAffected = stmt.executeUpdate();
+			stmt.close();
+			if (qtdRowsAffected > 0)
+				return true;
+			return false;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
 		return false;
 	}
 
@@ -66,7 +86,7 @@ public class Postagem_dao {
 		String sql = "SELECT * FROM postagem where email_usuario = ?;";
 		ArrayList<Postagem> minhas_postagens = new ArrayList<Postagem>();
 		this.connection = new Connection_factory().getConnection();
-		
+
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
 			stmt.setString(1, email);
@@ -88,7 +108,7 @@ public class Postagem_dao {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return minhas_postagens;
 	}
 
@@ -96,7 +116,72 @@ public class Postagem_dao {
 		return false;
 	}
 
-	public boolean feed() {
+	public ArrayList<Postagem> feed(String email_segue) {
+		String sql = "select * from Postagem P where P.email_usuario in ( select email_seguido from folow where email_segue = ?);";
+		ArrayList<Postagem> feed = new ArrayList<Postagem>();
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			stmt.setString(1, email_segue);
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+				Date data = rs.getDate("Data");
+				java.sql.Time hora = rs.getTime("Hora");
+				String texto = rs.getString("texto");
+				String email = rs.getString("email_usuario");
+				Postagem post = new Postagem(data, hora, texto, email);
+				feed.add(post);
+			}
+			stmt.close();
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return feed;
+	}
+
+	public ArrayList<Postagem> pesqPostByTex(String texto, String email_user) {
+		ArrayList<Postagem> base = this.list_my_Posts(email_user);
+		ArrayList<Postagem> result = new ArrayList<Postagem>();
+		for (Postagem postagem : base) {
+			if (postagem.getTexto().contains(texto)) {
+				result.add(postagem);
+			}
+		}
+		return result;
+	}
+	
+	
+	public boolean alterTextPost(String texto, String novoTexto, String email) {
+		String sql = "UPDATE postagem SET texto = ? where texto = ? and email_usuario = ?";
+		this.connection = new Connection_factory().getConnection();
+		try {
+			PreparedStatement stmt = connection.prepareStatement(sql);
+			
+			stmt.setString(1, novoTexto);
+			stmt.setString(2, texto);
+			stmt.setString(3, email);
+
+			int qtdRowsAffected = stmt.executeUpdate();
+			stmt.close();
+			if (qtdRowsAffected > 0)
+				return true;
+			return false;
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+		} finally {
+			try {
+				this.connection.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 		return false;
 	}
+	
 }

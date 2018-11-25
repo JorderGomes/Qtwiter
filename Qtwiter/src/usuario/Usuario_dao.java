@@ -10,9 +10,7 @@ import jdbc.Connection_factory;
 
 public class Usuario_dao {
 	private Connection connection;
-
-	public Usuario_dao() {
-	}
+	public Usuario_dao() {}
 
 	public boolean addUser(Usuario usuario) {
 		String sql = "INSERT INTO usuario(nome, email, senha) VALUES (?, ?, ?)";
@@ -30,7 +28,7 @@ public class Usuario_dao {
 				return true;
 			return false;
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			System.out.println("Erro ao preencher campos.");
 		} finally {
 			try {
 				this.connection.close();
@@ -46,7 +44,6 @@ public class Usuario_dao {
 		this.connection = new Connection_factory().getConnection();
 		try {
 			PreparedStatement stmt = connection.prepareStatement(sql);
-			// seta os valores
 			stmt.setString(1, email);
 			int qtdRowsAffected = stmt.executeUpdate();
 			stmt.close();
@@ -54,7 +51,7 @@ public class Usuario_dao {
 				return true;
 			return false;
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			 System.out.println("Usuario nao encontrado");
 		} finally {
 			try {
 				this.connection.close();
@@ -194,7 +191,7 @@ public class Usuario_dao {
 			user = new Usuario(nome, email, senha);
 			stmt.close();
 		} catch (SQLException e) {
-			System.err.println(e.getMessage());
+			// System.out.println(e.getMessage());
 		} finally {
 			try {
 				this.connection.close();

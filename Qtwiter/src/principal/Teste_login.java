@@ -47,7 +47,7 @@ public class Teste_login {
 				usuario = usuario_dao.getNamePass(nome, senha);
 				
 				if (usuario == null)
-					System.out.println("Erro: usuario vazio!");
+					System.out.println("Erro: usuario inexistente!");
 				else {
 					log.ativo(usuario);
 				}
