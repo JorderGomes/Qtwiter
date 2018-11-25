@@ -6,13 +6,14 @@ import java.util.Scanner;
 import usuario.Usuario;
 import usuario.Usuario_dao;
 
-public class Teste_login {
+public class Main {
 	public static void main(String[] args) throws ParseException {
 		boolean run = true;
 		Logado log = new Logado();
 		Usuario usuario = null;
 		Usuario_dao usuario_dao = new Usuario_dao();
 		String nome, email, senha;
+		Validacoes al = new Validacoes();
 		while (run) {
 			System.out.println("| 1 | Cadastrar usuário");
 			System.out.println("| 2 | Logar");
@@ -35,6 +36,21 @@ public class Teste_login {
 				senha = input.nextLine();
 				System.out.println("Digite seu email:");
 				email = input.nextLine();
+				
+				al.addEntrada(nome);
+				al.addEntrada(senha);
+				al.addEntrada(email);
+				boolean ent = al.Entrada(); 
+				boolean e = al.validateEmail(email);
+				
+				if(!ent) {
+					System.out.println("Usuario vazio!");
+					break;
+				}else if(!e) {
+					System.out.println("email invalido");
+					break;
+				}
+				
 				usuario = new Usuario(nome, email, senha);
 				usuario_dao.addUser(usuario);
 				break;

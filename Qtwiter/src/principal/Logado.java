@@ -18,9 +18,11 @@ public class Logado {
 	private Folow_dao folow_dao = new Folow_dao();
 	private Folow folow;
 	private Scanner input;
+	
 
 	public void ativo(Usuario user) throws ParseException {
 		String texto;
+		Validacoes al = new Validacoes();
 		boolean run = true, result_querys;
 		ArrayList<Postagem> listpost = new ArrayList<Postagem>();
 		ArrayList<Usuario> list_user = new ArrayList<Usuario>();
@@ -52,6 +54,14 @@ public class Logado {
 			case "1":
 				System.out.println("Digite sua postagem:");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Postagem vazia!");
+					break;
+				}
+				
 				post = new Postagem(texto, user.getEmail());
 				result_querys = post_dao.insercaoPostagem(post);
 				if(result_querys) System.out.println("Sua postagem foi publicada!");
@@ -74,6 +84,14 @@ public class Logado {
 			case "5":
 				System.out.println("Digite o email de quem você deseja seguir:");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Email vazio!");
+					break;
+				}
+				
 				folow = new Folow( user.getEmail(), texto);
 				result_querys =  folow_dao.seguir(folow);
 				if(result_querys) System.out.println("Você já está seguindo " + texto);
@@ -82,6 +100,14 @@ public class Logado {
 			case "6":
 				System.out.println("Digite o email de quem você deseja parar de seguir:");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Email vazio!");
+					break;
+				}
+				
 				folow = new Folow(user.getEmail(), texto);
 				result_querys =  folow_dao.pararDeSeguir(folow);
 				if(result_querys) System.out.println("Você deixou de seguir " + texto);
@@ -91,6 +117,14 @@ public class Logado {
 			case "7":
 				System.out.println("Qual é o seu novo nome?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("nome vazio!");
+					break;
+				}
+				
 				result_querys = us_dao.alterUser(user, texto) ;
 				if(result_querys) System.out.println("Nome alterado!");
 				else System.out.println("Erro ao alterar");
@@ -99,6 +133,14 @@ public class Logado {
 			case "8":
 				System.out.println("Qual é a sua nova senha?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Senha vazia!");
+					break;
+				}
+				
 				result_querys = us_dao.alterSenhaUser(user, texto) ;
 				if(result_querys) System.out.println("Senha alterada!");
 				else System.out.println("Erro ao alterar");
@@ -106,6 +148,14 @@ public class Logado {
 			case "9":
 				System.out.println("Qual é o seu novo email?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Email vazio!");
+					break;
+				}
+				
 				result_querys = us_dao.alterEUser(user, texto) ;
 				if(result_querys) System.out.println("Email alterado!");
 				else System.out.println("Erro ao alterar");
@@ -117,12 +167,28 @@ public class Logado {
 			case "11":
 				System.out.println("O que você disse?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Postagem vazia!");
+					break;
+				}
+				
 				listpost = post_dao.pesqPostByTex(texto, user.getEmail());
 				System.out.println(listpost);
 				break;
 			case "12":
 				System.out.println("O que você disse?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Postagem vazia!");
+					break;
+				}
+				
 				result_querys = post_dao.deletarPostagem(texto, user.getEmail());
 				if(result_querys) System.out.println("Apagada!");
 				else System.out.println("Erro ao apagar");
@@ -130,6 +196,14 @@ public class Logado {
 			case "13":
 				System.out.println("O que você disse?");
 				texto = input.nextLine();
+				
+				al.addEntrada(texto);
+				result_querys = al.Entrada();
+				if(!result_querys) {
+					System.out.println("Postagem vazia!");
+					break;
+				}
+				
 				System.out.println("O que você quer dizer?");
 				String novoTexto = input.nextLine();
 				result_querys = post_dao.alterTextPost(texto, novoTexto, user.getEmail());
